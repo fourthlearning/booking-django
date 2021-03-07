@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2 class="text-dark">WELCOME TO E-BOOKING
+        {% if perms.room.add_room %}
+        <a href="{% url 'room_add' %}"><button type="button"
+                class="btn btn-secondary ml-3 btn btn-warning disabled">Create New Room</button></a>
+        {% endif %}
+    </h2>
+    <hr />
+    <form class="form-inline" method="POST" action="{% url 'index' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="inputSearch">SEARCH ROOM : </label>
+            <input type="text" class="form-control form-control-sm" id="inputSearch" name="search"
+                placeholder="ค้นหาชื่อห้อง">
+        </div>&emsp;
+        <div class="form-group">
+            <label for="date-input">SEARCH DATE : </label>&nbsp;
+            <p><input placeholder="ค้นหาวันว่าง" type="text" id="datepicker" class="form-control form-control-sm"
+                    id="date" value="{{booking.date}}"></p>
+        </div>&emsp;
+        <div class="form-group ">
+            <label for="inputState">SEARCH TIME : </label>
+            <select id="inputState" class="form-control form-control-sm">
+                <option selected>--เลือกเวลาว่าง--</option>
+                {% for rm in room %}
+                <option>{{ rm.open_time }} - {{ rm.close_time }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary ml-3">Submit</button>
+    </form><br />
+    <div class="card border-primary mb-3">
+        <div class="card-header"><b>ROOM LIST</b></div>
+        <div class="card-body">
+            <p class="card-text">
+                <table class="table table-hove">
+                    <thead class="thead-dark text-center">
+                        <tr>
+                            <th scope="col">NAME</th>
+                            <th scope="col">OPEN</th>
+                            <th scope="col">CLOSE</th>
+                            <th scope="col">CAPACITY</th>
+                            {% if perms.room.change_room and perms.room.delete_room %}
+                            <th scope="col">แก้ไข/ลบ</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for rm in room %}
+                        <tr>
+                            <td>{{ rm.name}}</td>
+                            <td>{{ rm.open_time }}</td>
+                            <td>{{ rm.close_time }}</td>
+                            <td>{{ rm.capacity }}</td>
+                            {% if perms.room.change_room and perms.room.delete_room%}
+                            <td>
+                                <a href="{% url 'room_update' room_id=rm.id %}">
+                                    <div class="btn btn-primary" id="{{rm.id}}">แก้ไข</div>
+                                </a>
+                                <a href="{% url 'room_delete' room_id=rm.id %}">
+                                    <div class="btn btn-warning" id="{{rm.id}}">ลบ</div>
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

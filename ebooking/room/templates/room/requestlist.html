@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="text-dark">WELCOME TO E-BOOKING : REQUEST LIST</h2><hr>
+        <div class="card border-primary mb-3" >
+            <div class="card-header"><b>REQUEST ROOM</b></div>
+            <td class="card-body">
+              <p class="card-text">
+                <table class="table table-hove">
+                    <thead class="thead-dark text-center">
+                        <tr>
+                            <th scope="col">NAME</th>
+                            <th scope="col">BOOKING DATE</th>
+                            <th scope="col">BOOKING TIME</th>
+                            <th scope="col">OPEN / CLOSE TIME</th>
+                            <th scope="col">STATUS</th>
+                            {% if perms.room.change_booking %}
+                            <th scope="col">VIEW DETAIL</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for bk in booking %}
+                        <tr>
+                            <td>{{ bk.room_id.name}}</td>
+                            <td>{{ bk.book_date }}</td>
+                            <td>{{ bk.start_time }} - {{ bk.end_time}}</td>
+                            <td>{{ bk.room_id.open_time }} - {{ bk.room_id.close_time }}</td>
+                            {% if bk.status == True %}
+                            <td><p class="text-success">APPROVE</p></td>
+                            {% else %}
+                            <td><p class="text-warning">HOLD ON</p></td>
+                            {% endif %}
+                            {% if perms.room.change_booking %}
+                            <td>
+                                <a href="{% url 'requestlist_edit' bk.id %}">
+                                    <div class="btn btn-warning" id="test">EDIT</div>
+                                </a>
+                            </td>
+                            {% endif %}  
+                        </tr>
+                        {% endfor %} 
+                    </tbody>
+                </table>
+              </p>
+            </div>
+          </div>
+                   
+{% endblock %}

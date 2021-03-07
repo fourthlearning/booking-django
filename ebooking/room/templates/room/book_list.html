@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h2 class="text-dark">WELCOME TO E-BOOKING : BOOKING ROOM</h2>
+  <hr><br/>
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-dark">DETAIL ROOM</h5><hr>
+          <p class="card-text">
+            <table class="table">
+              <thead class="thead-dark text-center">
+                <tr>
+                  <th scope="col">NAME</th>
+                  <th scope="col">OPEN</th>
+                  <th scope="col">CLOSE</th>
+                  <th scope="col">CAPACITY</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                {% for rm in room %}
+                <tr>
+                  <td>{{ rm.name}}</td>
+                  <td>{{ rm.open_time }}</td>
+                  <td>{{ rm.close_time }}</td>
+                  <td>{{ rm.capacity }}</td>
+                  <td>{{ rm.room }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center">BOOKING</h5><hr/>
+          <p class="card-text">
+              <!-- Submit to class_add view -->
+              <form method="POST" action="{% url 'booking' %}">
+                {% csrf_token %}
+                <!--Date picker -->
+                <div class="form-group">
+                  <label for="ืname">NAME :</label>&nbsp;
+                  <select id="inputState" class="form-control" name="room_name">
+                    <option selected>--เลือกห้อง--</option>
+                    {% for rm in room %}
+                    <option value="{{ rm.id }}">{{ rm.name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group">
+                  DATE BOOKING : <input type="date" id="datepicker"class="form-control" name = "book_date" value="{{booking.book_date}}">
+                  
+                </div>
+                <div class="form-group">
+                  <label for="start_time">START TIME :</label>&nbsp;
+                  <input type="time" class="form-control form-control-sm" id="start_time" name="start_time"
+                    placeholder="13:45" value="{{booking.start_time}}">
+                </div>
+                <div class="form-group">
+                  <label for="end_time">END TIME :</label>&nbsp;
+                  <input type="time" class="form-control form-control-sm" id="end_time" name="end_time"
+                    placeholder="13:45" value="{{booking.end_time}}">
+                </div>
+                <div class="form-group">
+                  <label for="description">DESCRIPTION :</label>
+                  <textarea name="description" class="form-control" id="description" rows="3"
+                    value="{{booking.description}}"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary ml-3">BOOKING ROOM</button> 
+              </form>  
+            </p>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock %}

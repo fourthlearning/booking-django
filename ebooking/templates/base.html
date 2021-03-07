@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>E-Booking</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  
+   
+
+    <style>
+        body {
+            background-color: cadetblue;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'index' %}">E-BOOKING</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+           
+            <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'booking' %}">BOOKING</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'requestlist' %}">REQUEST LIST</a>
+                </li>
+                <!--จะแสดงเมื่อมีการloginถูกต้องแล้ว-->
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">LOGOUT</a>
+                </li>
+                {% endif %}
+
+            </ul>
+            
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script rel="stylesheet" type="text/javascript" href="{% static 'js/bootstrap.min.js'%}"></script>
+    <script rel="stylesheet" type="text/javascript" href="{% static 'js/date.js'%}"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    $( function() {
+      $( "#datepicker" ).datepicker();
+    } );
+    </script>
+</body>
+
+</html>

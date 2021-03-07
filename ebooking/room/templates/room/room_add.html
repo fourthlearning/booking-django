@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>เพิ่มข้อมูลห้อง (Create New Room)</h1>
+    <br />
+    {% if room.id %}
+    <!-- Submit to class_update view -->
+    <form method="POST" action="{% url 'room_update' room_id=room.id %}">
+        {% else %}
+        <!-- Submit to class_add view -->
+        <form method="POST" action="{% url 'room_add' %}">
+            {% endif %}
+            {% csrf_token %}
+            {% if msg %}<p class="text-success">{{msg}}</p>{% endif %}
+            <div class="form-row">
+                <div class="form-group col-6">ชื่อห้อง :
+                    <input class="form-control" type="text" placeholder="" name="name" value="{{room.name}}" required>
+
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-4">
+                    <label for="open_time">เวลาเริ่ม :</label>
+                    <input type="time" class="form-control" name="open_time" id="open_time" placeholder="09:00"
+                        value="{{room.open_time}}" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-4">
+                    <label for="close_time">เวลาจบ :</label>
+                    <input type="time" class="form-control" name="close_time" id="close_time" placeholder="16:00"
+                        value="{{room.close_time}}" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-4">
+                    <label for="capacity">ความจุ :</label>
+                    <input type="number" class="form-control" name="capacity" id="capacity" value="{{room.capacity}}"
+                        required>
+                </div>
+            </div>
+
+            <button type="reset" class="btn btn-warning ml-3">Reset Form</button>
+            <button type="submit" class="btn btn-primary ml-3">Submit</button>
+        </form>
+    </form>
+</div>
+{% endblock %}

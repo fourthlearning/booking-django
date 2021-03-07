@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="text-dark">LOGIN E-BOOKING</h2><hr>
+        <div class="card border-primary "  >
+            <h5 class="card-header text-dark">ระบบจองห้อง E-Booking</h5>
+            <div class="card-body">
+              <p class="card-text"> {% if error %} <p class ="text-danger">{{ error }}</p>{% endif %}
+              <form method="POST" action="{% url 'login' %}">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <label for="username">Username:</label>
+                      <input type="text" placeholder='บัญชีผู้ใช้'class="form-control ml-3" id="username" 
+                          name="username" value="{{username}}">
+                  </div>
+                  <div class="form-group">
+                      <label for="password">Password:</label>
+                      <input type="password" placeholder='รหัสผ่าน'class="form-control ml-3" id="password" 
+                          name="password" value="{{password}}">
+                  </div>
+                  <button type="submit" class="btn btn-primary ml-3">เข้าสู่ระบบ</button>
+                  <a href="{% url 'register' %}" class="button">ลงทะเบียน</a>
+              </form></p>
+            </div>
+          </div>
+        <br/><br/>
+    </div>
+    
+{% endblock %}

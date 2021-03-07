@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h2 class="text-dark">WELCOME TO E-BOOKING : EDIT REQUEST LIST</h2>
+  <hr>
+  <form action="{% url 'requestlist_edit' bk.id %}" method="POST">
+    {% csrf_token %}
+    <div class="card">
+      <div class="card-header">
+        <h5 class="text-dark">REQUEST LIST DETAIL</h5>
+      </div>
+      <div class="card-body">
+        <p class="card-text">ROOM : {{ bk.room_id.name}}</p>
+        <p class="card-text">BOOKING DATE :{{ bk.book_date }}</p>
+        <p class="card-text">BOOKING TIME : {{ bk.start_time }} - {{ bk.end_time}}</p>
+        <p class="card-text">OPEN / CLOSE TIME : {{ bk.room_id.open_time }} - {{ bk.room_id.close_time }}</p>
+
+        <p class="card-text">STATUS :
+          <div class="form-group form-check">
+            <input name='checkbox' type="checkbox" class="form-check-input" id="exampleCheck1" value="comfirm">
+            <label class="form-check-label" for="exampleCheck1">APPROVE</label>
+          </div>
+        </p>
+        <div>
+          <p class="card-text">STATUS REMARK : <textarea name="statusremark" class="form-control" id="description"
+              rows="3" value="{{booking.description}}"></textarea></p>
+
+        </div><br>
+        <button type="submit" class="btn btn-primary ml-3">SUMMIT</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+{% endblock %}
+
